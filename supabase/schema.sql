@@ -1,5 +1,4 @@
 -- RotaFit — schema do banco de dados
--- Execute no SQL Editor do Supabase
 
 -- Tabela principal de corridas
 create table if not exists runs (
