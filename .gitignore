@@ -1,0 +1,14 @@
+node_modules/
+.expo/
+dist/
+web-build/
+
+# env — nunca commite segredos
+.env
+.env.*
+# mas mantenha o exemplo
+!.env.example
+
+# sistema
+.DS_Store
+*.log
