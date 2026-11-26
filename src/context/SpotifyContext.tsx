@@ -33,7 +33,8 @@ export function SpotifyProvider({ children }: { children: React.ReactNode }) {
   const [connecting, setConnecting] = useState(false);
   const refreshPromiseRef = useRef<Promise<string | null> | null>(null);
 
-  const redirectUri = AuthSession.makeRedirectUri({ scheme: 'rotafit', path: 'spotify' });
+const redirectUri = AuthSession.makeRedirectUri({ scheme: 'rotafit', path: 'spotify-callback' });
+console.log('Spotify redirectUri:', redirectUri);
 
   // Carrega tokens do SecureStore na inicialização
   useEffect(() => {

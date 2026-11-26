@@ -4,6 +4,7 @@
     "slug": "rotafit",
     "version": "1.0.0",
     "scheme": "rotafit",
+    "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -14,7 +15,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.seuusuario.rotafit"
+      "bundleIdentifier": "com.seuusuario.rotafit",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "O RotaFit precisa da sua localização para registrar o trajeto da corrida.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "O RotaFit precisa da sua localização para registrar o trajeto da corrida."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,19 +29,20 @@
       "package": "com.seuusuario.rotafit",
       "permissions": [
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
       ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "bundler": "metro"
+      "bundler": "metro",
+      "output": "static"
     },
     "plugins": [
       "expo-router",
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "O RotaFit precisa da sua localização para registrar o trajeto da corrida.",
           "locationWhenInUsePermission": "O RotaFit precisa da sua localização para registrar o trajeto da corrida."
         }
       ]

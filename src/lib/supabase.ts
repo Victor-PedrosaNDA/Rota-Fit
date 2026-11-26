@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
-import { AppState } from 'react-native';
+import { Platform, AppState } from 'react-native';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_KEY!;
@@ -11,20 +10,29 @@ if (!supabaseUrl || !supabaseKey) {
   );
 }
 
+const getStorage = () => {
+  if (Platform.OS === 'web') {
+    return typeof window !== 'undefined' ? window.localStorage : undefined;
+  }
+  const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+  return AsyncStorage;
+};
+
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
-    storage: AsyncStorage,
+    storage: getStorage(),
     autoRefreshToken: true,
     persistSession: true,
-    detectSessionInUrl: false,
+    detectSessionInUrl: Platform.OS === 'web',
   },
 });
 
-// Pausa o auto-refresh quando o app vai para background
-AppState.addEventListener('change', (state) => {
-  if (state === 'active') {
-    supabase.auth.startAutoRefresh();
-  } else {
-    supabase.auth.stopAutoRefresh();
-  }
-});
+if (Platform.OS !== 'web') {
+  AppState.addEventListener('change', (state) => {
+    if (state === 'active') {
+      supabase.auth.startAutoRefresh();
+    } else {
+      supabase.auth.stopAutoRefresh();
+    }
+  });
+}
